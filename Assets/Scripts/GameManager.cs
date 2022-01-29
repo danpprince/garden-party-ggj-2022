@@ -88,6 +88,12 @@ public class GameManager : MonoBehaviour
             List<GameObject> organismCopy = new List<GameObject>(organisms);
             foreach (GameObject org in organismCopy)
             {
+                // The organism may have been eaten in a previous update
+                if (org is null)
+                {
+                    continue;
+                }
+
                 bool isReproducing = Random.value < reproductionProbability;
                 if (isReproducing)
                 {
@@ -112,7 +118,20 @@ public class GameManager : MonoBehaviour
                     bool positionHasExistingOrganism = !(organismGrid[rowIndex][colIndex] is null);
                     if (positionHasExistingOrganism)
                     {
-                        continue;
+                        GameObject existingOrganism = organismGrid[rowIndex][colIndex];
+                        OrganismType existingOrganismType = existingOrganism.GetComponent<OrganismModel>().type;
+
+                        bool parentTypeCanEatExistingOrg =
+                            org.GetComponent<OrganismModel>().CanEatType(existingOrganismType);
+
+                        if (parentTypeCanEatExistingOrg)
+                        {
+                            Destroy(existingOrganism);
+                            organismGrid[rowIndex][colIndex] = null;
+                        }
+                        else {
+                            continue;
+                        }
                     }
 
                     Quaternion defaultRotation = new Quaternion();

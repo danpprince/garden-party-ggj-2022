@@ -261,9 +261,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numRows: 10
   numCols: 10
-  numInitialOrganisms: 5
+  numInitialOrganisms: 6
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
-  organismPrefab: {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
+  organismPrefabs:
+  - {fileID: 1339464496621412420, guid: 8244351398a688747ae73bd1b162e6c9, type: 3}
+  - {fileID: 1339464496621412420, guid: 6e69a225f9153b24484d0338447a8d35, type: 3}
+  - {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
   simulationUpdatePeriodSec: 1
   reproductionProbability: 0.02
 --- !u!1 &963194225

@@ -17,7 +17,7 @@ public class OrganismModel : MonoBehaviour
     {
         return (type == OrganismType.Green && otherType == OrganismType.Blue)
              || (type == OrganismType.Red && otherType == OrganismType.Green)
-             || (type == OrganismType.Blue && otherType == OrganismType.Green);
+             || (type == OrganismType.Blue && otherType == OrganismType.Red);
     }
 
 }
