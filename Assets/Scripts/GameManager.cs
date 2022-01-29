@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public int numRows = 10, numCols = 10, numInitialOrganisms = 5;
 
     public GameObject tilePrefab;
@@ -20,6 +18,7 @@ public class GameManager : MonoBehaviour
     private List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
+    // Start is called before the first frame update
     void Start()
     {
         InitializeTiles();
@@ -81,9 +80,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool isTimeToUpdateSimulation = Time.time - lastSimulationUpdateSec > simulationUpdatePeriodSec;
+        float currentTimeSec = Time.time;
+        bool isTimeToUpdateSimulation = currentTimeSec - lastSimulationUpdateSec > simulationUpdatePeriodSec;
         if (isTimeToUpdateSimulation)
         {
+            lastSimulationUpdateSec = currentTimeSec;
+
             // Make a copy of the organism list so we can mutate the original while looping
             List<GameObject> organismCopy = new List<GameObject>(organisms);
             foreach (GameObject org in organismCopy)
