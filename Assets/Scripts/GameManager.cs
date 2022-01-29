@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
             for (int colIndex = 0; colIndex < numCols; colIndex++)
             {
                 Vector3 tilePosition = new Vector3(rowIndex, 0, colIndex);
-                Quaternion defaultRotation = new Quaternion();
-                tileRow.Add(Instantiate(tilePrefab, tilePosition, defaultRotation));
+                GameObject newTile = Instantiate(tilePrefab, tilePosition, tilePrefab.transform.rotation);
+                tileRow.Add(newTile);
 
                 organismGridRow.Add(null);
             }
@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 GameObject newOrganism = Instantiate(orgPrefab, organismPosition, orgPrefab.transform.rotation);
+                newOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
+                newOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
                 organismGrid[rowIndex][colIndex] = newOrganism;
             }
         }
@@ -137,6 +139,8 @@ public class GameManager : MonoBehaviour
 
                         Vector3 childPosition = new Vector3(childRowIndex, parentPosition.y, childColIndex);
                         GameObject childOrganism = Instantiate(organism, childPosition, organism.transform.rotation);
+                        childOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
+                        childOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
                         organismGrid[childRowIndex][childColIndex] = childOrganism;
                     }
                 }
