@@ -263,7 +263,9 @@ MonoBehaviour:
   numCols: 10
   numInitialOrganisms: 5
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
-  organism: {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
+  organismPrefab: {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
+  simulationUpdatePeriodSec: 1
+  reproductionProbability: 0.02
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
