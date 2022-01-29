@@ -21,9 +21,9 @@ public class OrganismModel : MonoBehaviour
     }
 
 
-    public float reproductionProbability(bool WaterOrganism)
+    public float reproductionProbability(bool isWatering)
     {
-      if (WaterOrganism == true)
+      if (isWatering == true)
       {
           return 0.3f;
       }
