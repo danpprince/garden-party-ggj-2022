@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int numRows = 10, numCols = 10, numInitialOrganisms = 5;
 
     public GameObject tilePrefab;
-    public GameObject organismPrefab;
+    public List<GameObject> organismPrefabs;
 
     public float simulationUpdatePeriodSec = 1.0f;
 
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     private List<List<GameObject>> generatedTiles;
     private List<GameObject> organisms;
+    private List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
     void Start()
@@ -30,9 +31,12 @@ public class GameManager : MonoBehaviour
     void InitializeTiles()
     {
         generatedTiles = new List<List<GameObject>>();
+        organismGrid = new List<List<GameObject>>();
+
         for (int rowIndex = 0; rowIndex < numRows; rowIndex++)
         {
             List<GameObject> tileRow = new List<GameObject>();
+            List<GameObject> organismGridRow = new List<GameObject>();
 
             List<GameObject> rowList = new List<GameObject>();
             for (int colIndex = 0; colIndex < numCols; colIndex++)
@@ -40,9 +44,12 @@ public class GameManager : MonoBehaviour
                 Vector3 tilePosition = new Vector3(rowIndex, 0, colIndex);
                 Quaternion defaultRotation = new Quaternion();
                 tileRow.Add(Instantiate(tilePrefab, tilePosition, defaultRotation));
+
+                organismGridRow.Add(null);
             }
 
             generatedTiles.Add(tileRow);
+            organismGrid.Add(organismGridRow);
         }
     }
 
@@ -56,7 +63,18 @@ public class GameManager : MonoBehaviour
 
             Vector3 organismPosition = new Vector3(rowIndex, 0.5f, colIndex);
             Quaternion defaultRotation = new Quaternion();
-            organisms.Add(Instantiate(organismPrefab, organismPosition, defaultRotation));
+
+            bool organismExistsAtPosition = !(organismGrid[rowIndex][colIndex] is null);
+            if (organismExistsAtPosition)
+            {
+                continue;
+            }
+
+
+            GameObject prefabToInstantiate = organismPrefabs[Random.Range(0, organismPrefabs.Count)];
+            GameObject newOrganism = Instantiate(prefabToInstantiate, organismPosition, defaultRotation);
+            organisms.Add(newOrganism);
+            organismGrid[rowIndex][colIndex] = newOrganism;
         }
     }
 
@@ -75,9 +93,13 @@ public class GameManager : MonoBehaviour
                 {
                     Vector3 parentPosition = org.transform.position;
 
-                    Vector3 childPosition = parentPosition;
-                    childPosition.x += Random.Range(-1, 2);
-                    childPosition.z += Random.Range(-1, 2);
+                    int rowIndex = (int) parentPosition.x;
+                    int colIndex = (int) parentPosition.z;
+
+                    rowIndex += Random.Range(-1, 2);
+                    colIndex += Random.Range(-1, 2);
+
+                    Vector3 childPosition = new Vector3(rowIndex, parentPosition.y, colIndex);
 
                     bool isWithinWorldBounds =
                         0 <= childPosition.x && childPosition.x < numRows
@@ -87,8 +109,16 @@ public class GameManager : MonoBehaviour
                         continue;
                     }
 
+                    bool positionHasExistingOrganism = !(organismGrid[rowIndex][colIndex] is null);
+                    if (positionHasExistingOrganism)
+                    {
+                        continue;
+                    }
+
                     Quaternion defaultRotation = new Quaternion();
-                    organisms.Add(Instantiate(organismPrefab, childPosition, defaultRotation));
+                    GameObject newOrganism = Instantiate(org, childPosition, defaultRotation);
+                    organisms.Add(newOrganism);
+                    organismGrid[rowIndex][colIndex] = newOrganism;
                 }
             }
         }
