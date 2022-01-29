@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> organismPrefabs;
 
     public float simulationUpdatePeriodSec = 1.0f;
-    public float reproductionProbability = 0.1f;
+    public bool isWatering = false;
 
     private List<List<GameObject>> generatedTiles;
     private List<List<GameObject>> organismGrid;
@@ -78,6 +78,20 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateSimulation();
+
+        if (Input.GetKeyDown(KeyCode.Space) & !isWatering)
+        {
+          StartCoroutine(Watering());
+        }
+    }
+
+    IEnumerator Watering()
+    {
+        isWatering = true;
+
+        yield return new WaitForSeconds(5);
+
+        isWatering = false;
     }
 
     void UpdateSimulation()
@@ -97,6 +111,9 @@ public class GameManager : MonoBehaviour
                     {
                         continue;
                     }
+
+                    float reproductionProbability =
+                        organism.GetComponent<OrganismModel>().reproductionProbability(isWatering);
 
                     bool isReproducing = Random.value < reproductionProbability;
                     if (isReproducing)

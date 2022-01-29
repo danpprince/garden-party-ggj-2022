@@ -20,4 +20,14 @@ public class OrganismModel : MonoBehaviour
              || (type == OrganismType.Blue && otherType == OrganismType.Red);
     }
 
+
+    public float reproductionProbability(bool isWatering)
+    {
+      if (isWatering == true)
+      {
+          return 0.3f;
+      }
+
+      return 0.1f;
+    }
 }
