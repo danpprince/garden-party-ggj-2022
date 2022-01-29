@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int numRows = 10, numCols = 10, numInitialOrganisms = 5;
+    public int numRows = 10, numCols = 10, numInitialOrganismsPerPrefab = 2;
 
     public GameObject tilePrefab;
     public List<GameObject> organismPrefabs;
 
     public float simulationUpdatePeriodSec = 1.0f;
-
     public float reproductionProbability = 0.1f;
 
     private List<List<GameObject>> generatedTiles;
-    private List<GameObject> organisms;
     private List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
@@ -37,7 +35,6 @@ public class GameManager : MonoBehaviour
             List<GameObject> tileRow = new List<GameObject>();
             List<GameObject> organismGridRow = new List<GameObject>();
 
-            List<GameObject> rowList = new List<GameObject>();
             for (int colIndex = 0; colIndex < numCols; colIndex++)
             {
                 Vector3 tilePosition = new Vector3(rowIndex, 0, colIndex);
@@ -54,31 +51,35 @@ public class GameManager : MonoBehaviour
 
     void InitializeOrganisms()
     {
-        organisms = new List<GameObject>();
-        for (int i = 0; i < numInitialOrganisms; i++)
+        foreach (GameObject orgPrefab in organismPrefabs)
         {
-            int rowIndex = Random.Range(0, numRows);
-            int colIndex = Random.Range(0, numCols);
-
-            Vector3 organismPosition = new Vector3(rowIndex, 0.5f, colIndex);
-            Quaternion defaultRotation = new Quaternion();
-
-            bool organismExistsAtPosition = !(organismGrid[rowIndex][colIndex] is null);
-            if (organismExistsAtPosition)
+            for (int i = 0; i < numInitialOrganismsPerPrefab; i++)
             {
-                continue;
+                int rowIndex = Random.Range(0, numRows);
+                int colIndex = Random.Range(0, numCols);
+
+                Vector3 organismPosition = new Vector3(rowIndex, 0.5f, colIndex);
+                Quaternion defaultRotation = new Quaternion();
+
+                bool organismExistsAtPosition = !(organismGrid[rowIndex][colIndex] is null);
+                if (organismExistsAtPosition)
+                {
+                    continue;
+                }
+
+                GameObject newOrganism = Instantiate(orgPrefab, organismPosition, defaultRotation);
+                organismGrid[rowIndex][colIndex] = newOrganism;
             }
-
-
-            GameObject prefabToInstantiate = organismPrefabs[Random.Range(0, organismPrefabs.Count)];
-            GameObject newOrganism = Instantiate(prefabToInstantiate, organismPosition, defaultRotation);
-            organisms.Add(newOrganism);
-            organismGrid[rowIndex][colIndex] = newOrganism;
         }
     }
 
     // Update is called once per frame
     void Update()
+    {
+        UpdateSimulation();
+    }
+
+    void UpdateSimulation()
     {
         float currentTimeSec = Time.time;
         bool isTimeToUpdateSimulation = currentTimeSec - lastSimulationUpdateSec > simulationUpdatePeriodSec;
@@ -86,60 +87,60 @@ public class GameManager : MonoBehaviour
         {
             lastSimulationUpdateSec = currentTimeSec;
 
-            // Make a copy of the organism list so we can mutate the original while looping
-            List<GameObject> organismCopy = new List<GameObject>(organisms);
-            foreach (GameObject org in organismCopy)
+            for (int rowIndex = 0; rowIndex < numRows; rowIndex++)
             {
-                // The organism may have been eaten in a previous update
-                if (org is null)
+                for (int colIndex = 0; colIndex < numCols; colIndex++)
                 {
-                    continue;
-                }
-
-                bool isReproducing = Random.value < reproductionProbability;
-                if (isReproducing)
-                {
-                    Vector3 parentPosition = org.transform.position;
-
-                    int rowIndex = (int) parentPosition.x;
-                    int colIndex = (int) parentPosition.z;
-
-                    rowIndex += Random.Range(-1, 2);
-                    colIndex += Random.Range(-1, 2);
-
-                    Vector3 childPosition = new Vector3(rowIndex, parentPosition.y, colIndex);
-
-                    bool isWithinWorldBounds =
-                        0 <= childPosition.x && childPosition.x < numRows
-                        && 0 <= childPosition.z && childPosition.z < numCols;
-                    if (!isWithinWorldBounds)
+                    GameObject organism = organismGrid[rowIndex][colIndex];
+                    if (organism is null)
                     {
                         continue;
                     }
 
-                    bool positionHasExistingOrganism = !(organismGrid[rowIndex][colIndex] is null);
-                    if (positionHasExistingOrganism)
+                    bool isReproducing = Random.value < reproductionProbability;
+                    if (isReproducing)
                     {
-                        GameObject existingOrganism = organismGrid[rowIndex][colIndex];
-                        OrganismType existingOrganismType = existingOrganism.GetComponent<OrganismModel>().type;
+                        Vector3 parentPosition = organism.transform.position;
 
-                        bool parentTypeCanEatExistingOrg =
-                            org.GetComponent<OrganismModel>().CanEatType(existingOrganismType);
+                        int childRowIndex = (int)parentPosition.x;
+                        int childColIndex = (int)parentPosition.z;
 
-                        if (parentTypeCanEatExistingOrg)
+                        childRowIndex += Random.Range(-1, 2);
+                        childColIndex += Random.Range(-1, 2);
+
+                        bool isWithinWorldBounds =
+                            0 <= childRowIndex && childRowIndex < numRows
+                            && 0 <= childColIndex && childColIndex < numCols;
+                        if (!isWithinWorldBounds)
                         {
-                            Destroy(existingOrganism);
-                            organismGrid[rowIndex][colIndex] = null;
-                        }
-                        else {
                             continue;
                         }
-                    }
 
-                    Quaternion defaultRotation = new Quaternion();
-                    GameObject newOrganism = Instantiate(org, childPosition, defaultRotation);
-                    organisms.Add(newOrganism);
-                    organismGrid[rowIndex][colIndex] = newOrganism;
+                        bool positionHasExistingOrganism = !(organismGrid[childRowIndex][childColIndex] is null);
+                        if (positionHasExistingOrganism)
+                        {
+                            GameObject existingOrganism = organismGrid[childRowIndex][childColIndex];
+                            OrganismType existingOrganismType = existingOrganism.GetComponent<OrganismModel>().type;
+
+                            bool parentTypeCanEatExistingOrg =
+                                organism.GetComponent<OrganismModel>().CanEatType(existingOrganismType);
+
+                            if (parentTypeCanEatExistingOrg)
+                            {
+                                Destroy(existingOrganism);
+                                organismGrid[childRowIndex][childColIndex] = null;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                        Quaternion defaultRotation = new Quaternion();
+                        Vector3 childPosition = new Vector3(childRowIndex, parentPosition.y, childColIndex);
+                        GameObject childOrganism = Instantiate(organism, childPosition, defaultRotation);
+                        organismGrid[childRowIndex][childColIndex] = childOrganism;
+                    }
                 }
             }
         }
