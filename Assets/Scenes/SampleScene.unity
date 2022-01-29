@@ -264,8 +264,8 @@ MonoBehaviour:
   numInitialOrganismsPerPrefab: 2
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
   organismPrefabs:
-  - {fileID: 1339464496621412420, guid: 6e69a225f9153b24484d0338447a8d35, type: 3}
-  - {fileID: 1464757494080808834, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
+  - {fileID: 2737965251715330118, guid: 4f9801d165110c24ea71b0558c4f041d, type: 3}
+  - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
   reproductionProbability: 0.1
