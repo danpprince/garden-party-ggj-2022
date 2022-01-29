@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c2e69966a28484649a89dcf925bef75a, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -226,6 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759024409}
   - component: {fileID: 759024410}
+  - component: {fileID: 759024411}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -269,6 +270,19 @@ MonoBehaviour:
   - {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
   simulationUpdatePeriodSec: 1
   reproductionProbability: 0.02
+--- !u!114 &759024411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759024408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289b3c2dd208df34eac3d3449cdde2f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyRestart: 114
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
