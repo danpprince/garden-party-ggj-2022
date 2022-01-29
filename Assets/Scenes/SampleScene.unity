@@ -242,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759024408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.264462, y: -0.98389745, z: 1.0133753}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -260,16 +260,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b51fc6bcde79d4e8c6ae6d859c7a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numRows: 10
-  numCols: 10
-  numInitialOrganisms: 6
+  numRows: 50
+  numCols: 50
+  numInitialOrganismsPerPrefab: 2
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
   organismPrefabs:
   - {fileID: 1339464496621412420, guid: 8244351398a688747ae73bd1b162e6c9, type: 3}
   - {fileID: 1339464496621412420, guid: 6e69a225f9153b24484d0338447a8d35, type: 3}
   - {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
-  simulationUpdatePeriodSec: 1
-  reproductionProbability: 0.02
+  simulationUpdatePeriodSec: 0.05
+  reproductionProbability: 0.1
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 4.5, y: 4, z: -5}
+  m_LocalPosition: {x: 25, y: 10, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
