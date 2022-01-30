@@ -847,11 +847,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 90095328}
   - {fileID: 2005354247}
   - {fileID: 978468715}
   - {fileID: 895068545}
   - {fileID: 1293204655}
+  - {fileID: 90095328}
   m_Father: {fileID: 963194228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1101,6 +1101,7 @@ MonoBehaviour:
   water_text: {fileID: 352715796}
   prune_text: {fileID: 0}
   fire_text: {fileID: 0}
+  watering_can: {fileID: 1729680396}
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,7 +1228,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479534230}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1412,7 +1413,7 @@ RectTransform:
   m_Children:
   - {fileID: 352715797}
   m_Father: {fileID: 479534230}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1513,6 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0e9ae931219be48b1d8a3b0f9a56ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  watering_can: {fileID: 1729680396}
   apply_water: 0
 --- !u!1 &1000493725
 GameObject:
@@ -1660,7 +1662,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479534230}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1781,7 +1783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874881829871878469, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4874881829871878469, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1837,11 +1839,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874881829871878469, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 33.142273
+      value: -541
       objectReference: {fileID: 0}
     - target: {fileID: 4874881829871878469, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -17.47174
+      value: 193
       objectReference: {fileID: 0}
     - target: {fileID: 4874881829871878469, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1876,6 +1878,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 126991982}
   UI_object: {fileID: 2005354246}
+--- !u!1 &1729680396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4874881829871878468, guid: 755c0fa0b18bcd641a1c088b0c035b8b, type: 3}
+  m_PrefabInstance: {fileID: 1696738332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2005354246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,7 +1915,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479534230}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

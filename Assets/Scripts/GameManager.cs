@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
         typeBeingWatered = type;
         Debug.LogFormat("Watering type {0}...", type.ToString());
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
 
         isWatering = false;
         water.SetActive(true);
