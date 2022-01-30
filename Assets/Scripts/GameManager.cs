@@ -18,6 +18,18 @@ public class GameManager : MonoBehaviour
 
     private OrganismType typeBeingWatered;
 
+    /// For Handling Effect Application\\\
+    public GameObject butterfly_weed_ui;
+    private bool apply_butterfly = false;
+    public GameObject water;
+    public GameObject prune;
+    public GameObject pest;
+    private bool apply_water = false;
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,10 +92,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateSimulation();
+        apply_butterfly = butterfly_weed_ui.GetComponent<clicked_on>().apply_butterfly;
+        apply_water = water.GetComponent<water_click>().apply_water;
 
         if (!isWatering)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (apply_butterfly && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Red));
             }
@@ -107,6 +121,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         isWatering = false;
+        water.GetComponent<water_click>().apply_water = false;
         Debug.Log("Stopping watering");
     }
 
