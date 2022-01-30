@@ -7,12 +7,15 @@ public class prune_apply : MonoBehaviour, IPointerClickHandler
 {
     public GameObject prune_shears;
     public bool apply_prune = false;
+    public AudioSource onClick;
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!apply_prune)
         {
             apply_prune = true;
             prune_shears.SetActive(true);
+            onClick.Play();
         }
 
         else
