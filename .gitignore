@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 # .DS_Store
 .DS_Store
+
+# Blender backup files
+*.blend1
