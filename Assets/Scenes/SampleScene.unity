@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 759024409}
   - component: {fileID: 759024410}
   - component: {fileID: 759024411}
+  - component: {fileID: 759024412}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -523,7 +524,7 @@ MonoBehaviour:
   - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
-  reproductionProbability: 0.1
+  isWatering: 0
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +538,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyRestart: 114
+--- !u!114 &759024412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759024408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf0f2e3a6985224a9bc4e7243c85515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyPruneBlue: 49
+  keyPruneRed: 50
+  keyPruneGreen: 51
+  gameManager: {fileID: 759024410}
+  popPercentToPrune: 0.5
+  pruneCooldownPeriodSec: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

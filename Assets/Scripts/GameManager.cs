@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public bool isWatering = false;
 
     private List<List<GameObject>> generatedTiles;
-    private List<List<GameObject>> organismGrid;
+    public List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
     // Start is called before the first frame update
