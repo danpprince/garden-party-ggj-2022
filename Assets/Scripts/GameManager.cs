@@ -13,9 +13,14 @@ public class GameManager : MonoBehaviour
 
     public float simulationUpdatePeriodSec = 1.0f;
     public bool isWatering = false;
+    public string currentWeatherCondition = "sunny";
 
     public float positionJitterAmount;
     public AudioSource waterAudio;
+
+    public AudioSource rainWeatherAudio;
+    public AudioSource frostWeatherAudio;
+    public AudioSource cloudyWeatherAudio;
 
     private List<List<GameObject>> generatedTiles;
     public List<List<GameObject>> organismGrid;
@@ -54,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         InitializeTiles();
         InitializeOrganisms();
+        InvokeRepeating("SetWeatherCondition", 5.0f, 5.0f);
 
         lastSimulationUpdateSec = 0;
         
@@ -152,6 +158,123 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void SetWeatherCondition()
+    {
+      // ugly code
+      // sunny 40%
+      // cloudy 30%
+      // rainy 20%
+      // frost 10%
+      stopWeatherAudio();
+
+      int result = Random.Range(0, 101);
+
+      if (result > 0 && result <= 40) {
+        currentWeatherCondition = "sunny";
+      }
+
+      if (result > 40 && result <= 70) {
+        currentWeatherCondition = "cloudy";
+      }
+
+      if (result > 70 && result <= 90) {
+        currentWeatherCondition = "rainy";
+      }
+
+      if (result > 90 && result <= 100) {
+        currentWeatherCondition = "frost";
+      }
+
+      startWeatherAudio();
+
+      print("===========[ currentWeatherCondition ]=============");
+      print(currentWeatherCondition);
+    }
+
+    void stopWeatherAudio()
+    {
+        rainWeatherAudio.Stop();
+        cloudyWeatherAudio.Stop();
+        frostWeatherAudio.Stop();
+    }
+
+    void startWeatherAudio()
+    {
+        if (currentWeatherCondition == "cloudy")
+        {
+            cloudyWeatherAudio.Play();
+        }
+        else if (currentWeatherCondition == "frost")
+        {
+            frostWeatherAudio.Play();
+        }
+        else if (currentWeatherCondition == "rainy")
+        {
+            rainWeatherAudio.Play();
+        }
+    }
+
+    float WeatherModifier(object type)
+    {
+      // ugly code
+      // green - virginia creeper
+      // red - butterfly weed
+      // blue - long leaf pine
+
+      if (currentWeatherCondition == "sunny")
+      {
+        if (type.ToString() == "Red")
+        {
+          return 0.03f;
+        }
+
+        if (type.ToString() == "Blue")
+        {
+          return 0.02f;
+        }
+
+        if (type.ToString() == "Green")
+        {
+          return 0.01f;
+        }
+      }
+
+      if (currentWeatherCondition == "cloudy")
+      {
+        return -0.02f;
+      }
+
+      if (currentWeatherCondition == "rainy")
+      {
+        if (type.ToString() == "Blue")
+        {
+          return 0.03f;
+        }
+
+        if (type.ToString() == "Green")
+        {
+          return 0.02f;
+        }
+
+        if (type.ToString() == "Red")
+        {
+          return 0.01f;
+        }
+      }
+
+      if (currentWeatherCondition == "frost")
+      {
+        if (type.ToString() == "Blue")
+        {
+          return 0.0f;
+        }
+
+        return -0.05f;
+      }
+
+      return 0.0f;
+    }
+
     IEnumerator WateringCoroutine(OrganismType type)
     {
         isWatering = true;
@@ -190,7 +313,7 @@ public class GameManager : MonoBehaviour
 
                     OrganismModel organismModel = organism.GetComponent<OrganismModel>();
                     bool isTypeBeingWatered = isWatering && organismModel.type == typeBeingWatered;
-                    float reproductionProbability = organismModel.reproductionProbability(isTypeBeingWatered);
+                    float reproductionProbability = organismModel.reproductionProbability(isTypeBeingWatered, + WeatherModifier(organismModel.type));
 
                     bool isReproducing = Random.value < reproductionProbability;
                     if (isReproducing)

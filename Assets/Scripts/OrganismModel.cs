@@ -9,6 +9,10 @@ public enum OrganismType
     Blue
 }
 
+// green - virginia creeper
+// red - butterfly weed
+// blue - long leaf pine
+
 public class OrganismModel : MonoBehaviour
 {
     public OrganismType type;
@@ -22,13 +26,13 @@ public class OrganismModel : MonoBehaviour
              || (type == OrganismType.Blue && otherType == OrganismType.Red);
     }
 
-    public float reproductionProbability(bool isWatering)
+    public float reproductionProbability(bool isWatering, float weatherModifier)
     {
       if (isWatering == true)
       {
-          return 0.30f;
+          return 0.30f + weatherModifier;
       }
 
-      return 0.05f;
+      return 0.05f + weatherModifier;
     }
 }
