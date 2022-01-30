@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
+    private OrganismType typeBeingWatered;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,19 +81,33 @@ public class GameManager : MonoBehaviour
     {
         UpdateSimulation();
 
-        if (Input.GetKeyDown(KeyCode.Space) & !isWatering)
+        if (!isWatering)
         {
-          StartCoroutine(Watering());
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                StartCoroutine(WateringCoroutine(OrganismType.Red));
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                StartCoroutine(WateringCoroutine(OrganismType.Green));
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(WateringCoroutine(OrganismType.Blue));
+            }
         }
     }
 
-    IEnumerator Watering()
+    IEnumerator WateringCoroutine(OrganismType type)
     {
         isWatering = true;
+        typeBeingWatered = type;
+        Debug.LogFormat("Watering type {0}...", type.ToString());
 
         yield return new WaitForSeconds(5);
 
         isWatering = false;
+        Debug.Log("Stopping watering");
     }
 
     void UpdateSimulation()
@@ -112,56 +128,63 @@ public class GameManager : MonoBehaviour
                         continue;
                     }
 
-                    float reproductionProbability =
-                        organism.GetComponent<OrganismModel>().reproductionProbability(isWatering);
+                    OrganismModel organismModel = organism.GetComponent<OrganismModel>();
+                    bool isTypeBeingWatered = isWatering && organismModel.type == typeBeingWatered;
+                    float reproductionProbability = organismModel.reproductionProbability(isTypeBeingWatered);
 
                     bool isReproducing = Random.value < reproductionProbability;
                     if (isReproducing)
                     {
-                        Vector3 parentPosition = organism.transform.position;
-
-                        int childRowIndex = (int)parentPosition.x;
-                        int childColIndex = (int)parentPosition.z;
-
-                        childRowIndex += Random.Range(-1, 2);
-                        childColIndex += Random.Range(-1, 2);
-
-                        bool isWithinWorldBounds =
-                            0 <= childRowIndex && childRowIndex < numRows
-                            && 0 <= childColIndex && childColIndex < numCols;
-                        if (!isWithinWorldBounds)
-                        {
-                            continue;
-                        }
-
-                        bool positionHasExistingOrganism = !(organismGrid[childRowIndex][childColIndex] is null);
-                        if (positionHasExistingOrganism)
-                        {
-                            GameObject existingOrganism = organismGrid[childRowIndex][childColIndex];
-                            OrganismType existingOrganismType = existingOrganism.GetComponent<OrganismModel>().type;
-
-                            bool parentTypeCanEatExistingOrg =
-                                organism.GetComponent<OrganismModel>().CanEatType(existingOrganismType);
-
-                            if (parentTypeCanEatExistingOrg)
-                            {
-                                Destroy(existingOrganism);
-                                organismGrid[childRowIndex][childColIndex] = null;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-
-                        Vector3 childPosition = new Vector3(childRowIndex, parentPosition.y, childColIndex);
-                        GameObject childOrganism = Instantiate(organism, childPosition, organism.transform.rotation);
-                        childOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
-                        childOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
-                        organismGrid[childRowIndex][childColIndex] = childOrganism;
+                        ReproduceOrganism(organism);
                     }
                 }
             }
         }
+    }
+
+    // Try to reproduce nearby the passed organism, or return if not possible
+    void ReproduceOrganism(GameObject organism)
+    {
+        Vector3 parentPosition = organism.transform.position;
+
+        int childRowIndex = (int)parentPosition.x;
+        int childColIndex = (int)parentPosition.z;
+
+        childRowIndex += Random.Range(-1, 2);
+        childColIndex += Random.Range(-1, 2);
+
+        bool isWithinWorldBounds =
+            0 <= childRowIndex && childRowIndex < numRows
+            && 0 <= childColIndex && childColIndex < numCols;
+        if (!isWithinWorldBounds)
+        {
+            return;
+        }
+
+        bool positionHasExistingOrganism = !(organismGrid[childRowIndex][childColIndex] is null);
+        if (positionHasExistingOrganism)
+        {
+            GameObject existingOrganism = organismGrid[childRowIndex][childColIndex];
+            OrganismType existingOrganismType = existingOrganism.GetComponent<OrganismModel>().type;
+
+            bool parentTypeCanEatExistingOrg =
+                organism.GetComponent<OrganismModel>().CanEatType(existingOrganismType);
+
+            if (parentTypeCanEatExistingOrg)
+            {
+                Destroy(existingOrganism);
+                organismGrid[childRowIndex][childColIndex] = null;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        Vector3 childPosition = new Vector3(childRowIndex, parentPosition.y, childColIndex);
+        GameObject childOrganism = Instantiate(organism, childPosition, organism.transform.rotation);
+        childOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
+        childOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
+        organismGrid[childRowIndex][childColIndex] = childOrganism;
     }
 }
