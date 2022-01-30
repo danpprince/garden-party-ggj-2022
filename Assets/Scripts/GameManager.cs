@@ -132,7 +132,6 @@ public class GameManager : MonoBehaviour
 
         if (!isWatering)
         {
-<<<<<<< HEAD
             if (apply_butterfly && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Red));
@@ -142,22 +141,6 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(WateringCoroutine(OrganismType.Green));
             }
             else if (apply_pine && apply_water)
-=======
-            // butterfly weed
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                StartCoroutine(WateringCoroutine(OrganismType.Red));
-            }
-
-            // virginia creeper
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                StartCoroutine(WateringCoroutine(OrganismType.Green));
-            }
-
-            // pine
-            else if (Input.GetKeyDown(KeyCode.E))
->>>>>>> origin/jk.weather-modifier
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Blue));
             }
