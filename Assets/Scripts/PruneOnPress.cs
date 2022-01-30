@@ -9,47 +9,42 @@ public class PruneOnPress : MonoBehaviour
     [SerializeField] KeyCode keyPruneGreen;
     [SerializeField] GameManager gameManager;
     [SerializeField] float popPercentToPrune;
-    
-    private List<GameObject> orgsToPrune;
-    private List<int> rowIndexPrune;
-    private List<int> colIndexPrune;
-
-    [SerializeField] public float pruneCooldownPeriodSec = 3.0f;
+    [SerializeField] public float pruneCooldownPeriodSec = 1.0f;
     private float lastPruneSec;
+    private bool isPruneTypeSelected = false;
 
     void Start()
     {
-        orgsToPrune = new List<GameObject>();
-        rowIndexPrune = new List<int>();
-        colIndexPrune = new List<int>();
         lastPruneSec = 0;
     }
-
 
     // Update is called once per frame
     void Update()
     {
+        OrganismType pruneOrganismType = new OrganismType();
+        //Identify plant type to prune
+        if (Input.GetKey(keyPruneBlue))
+        {
+            pruneOrganismType = OrganismType.Blue;
+            isPruneTypeSelected = true;
+            Debug.Log("Prune Blue Trees");
+        } else if (Input.GetKey(keyPruneGreen))
+        {
+            pruneOrganismType = OrganismType.Green;
+            isPruneTypeSelected = true;
+            Debug.Log("Prune Green Vines");
+        } else if (Input.GetKey(keyPruneRed))
+        {
+            pruneOrganismType = OrganismType.Red;
+            isPruneTypeSelected = true;
+            Debug.Log("Prune Red Weeds");
+        }
         float currentTimeSec = Time.time;
         bool isTimeToPrune = currentTimeSec - lastPruneSec > pruneCooldownPeriodSec;
-        if (isTimeToPrune)
-        {
-            lastPruneSec = currentTimeSec;
-            OrganismType pruneOrganismType = new OrganismType();
-            //Identify plant type to prune
-            if (Input.GetKey(keyPruneBlue))
-            {
-                pruneOrganismType = OrganismType.Blue;
-                Debug.Log("Prune Blue Trees");
-            } else if (Input.GetKey(keyPruneGreen))
-            {
-                pruneOrganismType = OrganismType.Green;
-                Debug.Log("Prune Green Vines");
-            } else if (Input.GetKey(keyPruneRed))
-            {
-                pruneOrganismType = OrganismType.Red;
-                Debug.Log("Prune Red Weeds");
-            }
-
+        if (isTimeToPrune && isPruneTypeSelected)
+        {            
+            isPruneTypeSelected = false;
+            lastPruneSec = currentTimeSec;     
             //crawl through grid looking for organisms, check the type for pruning
             for (int rowIndex = 0; rowIndex < gameManager.numRows; rowIndex++)
             {
@@ -62,33 +57,16 @@ public class PruneOnPress : MonoBehaviour
                     }
                     if (organism.GetComponent<OrganismModel>().type == pruneOrganismType)
                     {
-                        orgsToPrune.Add(organism);
-                        rowIndexPrune.Add(rowIndex);
-                        colIndexPrune.Add(colIndex);
-                        Debug.Log("Plant added to Prune List");
+                        bool isPruning = Random.value < popPercentToPrune;
+                        if (isPruning)
+                        {
+                            Destroy(organism);
+                            gameManager.organismGrid[rowIndex][colIndex] = null;
+                            Debug.Log("Plant pruned successfully!");
+                        }
                     }
                 }
             }
-
-            //Prune %% of population
-            int numToPrune = Mathf.RoundToInt(popPercentToPrune*orgsToPrune.Count);
-            for(int i = 0; i < numToPrune; i++)
-            {
-                int k = Random.Range(0, orgsToPrune.Count);
-                if (orgsToPrune[k] is null)
-                {
-                    i--;
-                    Debug.Log("Null encountered during pruning");
-                }
-                else
-                {
-                    Destroy(orgsToPrune[k]);
-                    gameManager.organismGrid[rowIndexPrune[k]][colIndexPrune[k]] = null;
-                    Debug.Log("Plant pruned successfully!");
-                }
-                
-            }
         }
-
     }
 }
