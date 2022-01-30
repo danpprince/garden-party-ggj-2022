@@ -157,13 +157,9 @@ public class GameManager : MonoBehaviour
         typeBeingWatered = type;
         Debug.LogFormat("Watering type {0}...", type.ToString());
 
-<<<<<<< HEAD
-        yield return new WaitForSeconds(2);
-=======
         waterAudio.Play();
 
-        yield return new WaitForSeconds(5);
->>>>>>> origin/main
+        yield return new WaitForSeconds(2);
 
         waterAudio.Stop();
 
