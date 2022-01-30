@@ -523,7 +523,7 @@ MonoBehaviour:
   - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
-  reproductionProbability: 0.1
+  isWatering: 0
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
