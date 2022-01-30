@@ -524,6 +524,7 @@ MonoBehaviour:
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
   isWatering: 0
+  positionJitterAmount: 0.5
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
