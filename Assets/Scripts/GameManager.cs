@@ -50,6 +50,11 @@ public class GameManager : MonoBehaviour
     public GameObject fire_text;
     /// 
     public  GameObject watering_can;
+
+
+
+    // for weather
+    public GameObject rain;
    
 
 
@@ -62,6 +67,7 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("SetWeatherCondition", 5.0f, 5.0f);
 
         lastSimulationUpdateSec = 0;
+        rain.SetActive(false);
         
         
 
@@ -179,7 +185,12 @@ public class GameManager : MonoBehaviour
 
       if (result > 70 && result <= 90) {
         currentWeatherCondition = "rainy";
+            rain.SetActive(true);
       }
+        else
+        {
+            rain.SetActive(false);
+        }
 
       if (result > 90 && result <= 100) {
         currentWeatherCondition = "frost";
