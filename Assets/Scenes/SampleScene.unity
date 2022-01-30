@@ -766,14 +766,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1b51fc6bcde79d4e8c6ae6d859c7a68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   numRows: 50
   numCols: 50
   numInitialOrganismsPerPrefab: 2
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
   organismPrefabs:
-  - {fileID: 2737965251715330118, guid: 4f9801d165110c24ea71b0558c4f041d, type: 3}
+  - {fileID: 3276279448317078006, guid: 0180a33f2729b0548accd272bbee410d, type: 3}
   - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
@@ -790,8 +790,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 289b3c2dd208df34eac3d3449cdde2f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   keyRestart: 114
 --- !u!1 &827097120
 GameObject:
