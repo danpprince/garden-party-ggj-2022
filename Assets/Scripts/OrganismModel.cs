@@ -13,6 +13,8 @@ public class OrganismModel : MonoBehaviour
 {
     public OrganismType type;
 
+    public int rowIndex, colIndex;
+
     public bool CanEatType(OrganismType otherType)
     {
         return (type == OrganismType.Green && otherType == OrganismType.Blue)
