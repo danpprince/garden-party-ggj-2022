@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +28,39 @@ public class GameManager : MonoBehaviour
 
     private OrganismType typeBeingWatered;
 
+    /// For Handling Effect Application\\\
+    public GameObject butterfly_weed_ui;
+    public GameObject pine_ui;
+    public GameObject creeper_ui;
+    ///
+    private bool apply_butterfly = false;
+    private bool apply_creeper = false;
+    private bool apply_pine = false;
+    ///
+    public GameObject water;
+    public GameObject prune;
+    public GameObject pest;
+    ///
+    private bool apply_water = false;
+    private bool apply_prune = false;
+    private bool apply_fire = false;
+    ///
+    public GameObject water_text;
+    public GameObject prune_text;
+    public GameObject fire_text;
+    /// 
+    public  GameObject watering_can;
+
+
+
+    // for weather
+    public GameObject rain;
+    
+
+   
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +69,12 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("SetWeatherCondition", 5.0f, 5.0f);
 
         lastSimulationUpdateSec = 0;
+        rain.SetActive(false);
+         
+        
+        
+
+   
     }
 
     void InitializeTiles()
@@ -97,26 +138,32 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateSimulation();
+        apply_butterfly = butterfly_weed_ui.GetComponent<clicked_on>().apply_butterfly;
+        apply_creeper = creeper_ui.GetComponent<apply_creeper>().apply2creeper;
+        apply_pine = pine_ui.GetComponent<apply_pine>().apply2pine;
+        ///
+        apply_water = water.GetComponent<water_click>().apply_water;
 
         if (!isWatering)
         {
-            // butterfly weed
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (apply_butterfly && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Red));
             }
-
-            // virginia creeper
-            else if (Input.GetKeyDown(KeyCode.W))
+            else if (apply_creeper && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Green));
             }
-
-            // pine
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (apply_pine && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Blue));
             }
+        }
+
+        if (isWatering)
+        {
+            water.SetActive(false);
+            watering_can.SetActive(false);
         }
     }
 
@@ -141,7 +188,12 @@ public class GameManager : MonoBehaviour
 
       if (result > 70 && result <= 90) {
         currentWeatherCondition = "rainy";
+            rain.SetActive(true);
       }
+        else
+        {
+            rain.SetActive(false);
+        }
 
       if (result > 90 && result <= 100) {
         currentWeatherCondition = "frost";
@@ -250,6 +302,8 @@ public class GameManager : MonoBehaviour
         waterAudio.Stop();
 
         isWatering = false;
+        water.SetActive(true);
+        water.GetComponent<water_click>().apply_water = false;
         Debug.Log("Stopping watering");
     }
 

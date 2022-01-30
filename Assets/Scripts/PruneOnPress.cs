@@ -12,6 +12,20 @@ public class PruneOnPress : MonoBehaviour
     [SerializeField] public float pruneCooldownPeriodSec = 1.0f;
     private float lastPruneSec;
     private bool isPruneTypeSelected = false;
+    
+    /// FOr UI interaction
+    public GameObject prune_button;
+    public GameObject prune_text;
+
+    public GameObject butterfly_weed_ui;
+    public GameObject pine_ui;
+    public GameObject creeper_ui;
+
+    private bool apply_butterfly = false;
+    private bool apply_creeper = false;
+    private bool apply_pine = false;
+
+    private bool apply_prune;
 
     void Start()
     {
@@ -21,19 +35,26 @@ public class PruneOnPress : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        apply_butterfly = butterfly_weed_ui.GetComponent<clicked_on>().apply_butterfly;
+        apply_creeper = creeper_ui.GetComponent<apply_creeper>().apply2creeper;
+        apply_pine = pine_ui.GetComponent<apply_pine>().apply2pine;
+
+        apply_prune = prune_button.GetComponent<prune_apply>().apply_prune;
+
         OrganismType pruneOrganismType = new OrganismType();
         //Identify plant type to prune
-        if (Input.GetKey(keyPruneBlue))
+        if (apply_pine && apply_prune)
         {
             pruneOrganismType = OrganismType.Blue;
             isPruneTypeSelected = true;
             //Debug.Log("Prune Blue Trees");
-        } else if (Input.GetKey(keyPruneGreen))
+        } else if (apply_prune && apply_creeper)
         {
             pruneOrganismType = OrganismType.Green;
             isPruneTypeSelected = true;
             //Debug.Log("Prune Green Vines");
-        } else if (Input.GetKey(keyPruneRed))
+        } else if (apply_prune && apply_butterfly)
         {
             pruneOrganismType = OrganismType.Red;
             isPruneTypeSelected = true;
@@ -41,8 +62,19 @@ public class PruneOnPress : MonoBehaviour
         }
         float currentTimeSec = Time.time;
         bool isTimeToPrune = currentTimeSec - lastPruneSec > pruneCooldownPeriodSec;
+
+        if (isTimeToPrune) 
+        {
+            prune_button.SetActive(true);
+        }
+        else
+        {
+            prune_button.SetActive(false);
+        }
+
+
         if (isTimeToPrune && isPruneTypeSelected)
-        {            
+        {
             isPruneTypeSelected = false;
             lastPruneSec = currentTimeSec;     
             //crawl through grid looking for organisms, check the type for pruning
@@ -62,6 +94,7 @@ public class PruneOnPress : MonoBehaviour
                         {
                             Destroy(organism);
                             gameManager.organismGrid[rowIndex][colIndex] = null;
+                            prune_button.GetComponent<prune_apply>().apply_prune = false;
                             //Debug.Log("Plant pruned successfully!");
                         }
                     }
