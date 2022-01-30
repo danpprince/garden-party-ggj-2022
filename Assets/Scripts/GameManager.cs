@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public float simulationUpdatePeriodSec = 1.0f;
     public bool isWatering = false;
 
+    public float positionJitterAmount;
+    public AudioSource waterAudio;
+
     private List<List<GameObject>> generatedTiles;
     private List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
@@ -91,7 +94,12 @@ public class GameManager : MonoBehaviour
                 int rowIndex = Random.Range(0, numRows);
                 int colIndex = Random.Range(0, numCols);
 
-                Vector3 organismPosition = new Vector3(rowIndex, 0, colIndex);
+                // Add some jitter to the position to make the layout more organic
+                Vector3 organismPosition = new Vector3(
+                    rowIndex + Random.Range(-1 * positionJitterAmount, positionJitterAmount),
+                    0,
+                    colIndex + Random.Range(-1 * positionJitterAmount, positionJitterAmount)
+                );
 
                 bool organismExistsAtPosition = !(organismGrid[rowIndex][colIndex] is null);
                 if (organismExistsAtPosition)
@@ -102,6 +110,9 @@ public class GameManager : MonoBehaviour
                 GameObject newOrganism = Instantiate(orgPrefab, organismPosition, orgPrefab.transform.rotation);
                 newOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
                 newOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
+                OrganismModel model = newOrganism.GetComponent<OrganismModel>();
+                model.rowIndex = rowIndex;
+                model.colIndex = colIndex;
                 organismGrid[rowIndex][colIndex] = newOrganism;
             }
         }
@@ -146,7 +157,15 @@ public class GameManager : MonoBehaviour
         typeBeingWatered = type;
         Debug.LogFormat("Watering type {0}...", type.ToString());
 
+<<<<<<< HEAD
         yield return new WaitForSeconds(2);
+=======
+        waterAudio.Play();
+
+        yield return new WaitForSeconds(5);
+>>>>>>> origin/main
+
+        waterAudio.Stop();
 
         isWatering = false;
         water.SetActive(true);
@@ -189,10 +208,9 @@ public class GameManager : MonoBehaviour
     // Try to reproduce nearby the passed organism, or return if not possible
     void ReproduceOrganism(GameObject organism)
     {
-        Vector3 parentPosition = organism.transform.position;
-
-        int childRowIndex = (int)parentPosition.x;
-        int childColIndex = (int)parentPosition.z;
+        OrganismModel parentModel = organism.GetComponent<OrganismModel>();
+        int childRowIndex = parentModel.rowIndex;
+        int childColIndex = parentModel.colIndex;
 
         childRowIndex += Random.Range(-1, 2);
         childColIndex += Random.Range(-1, 2);
@@ -225,10 +243,19 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Vector3 childPosition = new Vector3(childRowIndex, parentPosition.y, childColIndex);
+        // Add some jitter to the position to make the layout more organic
+        Vector3 childPosition = new Vector3(
+            childRowIndex + Random.Range(-1 * positionJitterAmount, positionJitterAmount),
+            0,
+            childColIndex + Random.Range(-1 * positionJitterAmount, positionJitterAmount)
+        );
+
         GameObject childOrganism = Instantiate(organism, childPosition, organism.transform.rotation);
         childOrganism.transform.Rotate(Vector3.up, Random.Range(0.0f, 360.0f), Space.World);
         childOrganism.transform.localScale = Random.Range(0.7f, 1.0f) * Vector3.one;
         organismGrid[childRowIndex][childColIndex] = childOrganism;
+        OrganismModel childModel = childOrganism.GetComponent<OrganismModel>();
+        childModel.rowIndex = childRowIndex;
+        childModel.colIndex = childColIndex;
     }
 }
