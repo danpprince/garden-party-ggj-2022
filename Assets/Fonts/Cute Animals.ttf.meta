@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1de48aa3de794e7439870fd65abbee47
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Cute Animals
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 260c713181f05b4468003cf6a21dfff4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
