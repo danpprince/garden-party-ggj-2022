@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public float simulationUpdatePeriodSec = 1.0f;
     public bool isWatering = false;
 
+    public AudioSource waterAudio;
+
     private List<List<GameObject>> generatedTiles;
     public List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
@@ -104,7 +106,11 @@ public class GameManager : MonoBehaviour
         typeBeingWatered = type;
         Debug.LogFormat("Watering type {0}...", type.ToString());
 
+        waterAudio.Play();
+
         yield return new WaitForSeconds(5);
+
+        waterAudio.Stop();
 
         isWatering = false;
         Debug.Log("Stopping watering");
