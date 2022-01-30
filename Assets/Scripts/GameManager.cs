@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public AudioSource waterAudio;
 
     private List<List<GameObject>> generatedTiles;
-    private List<List<GameObject>> organismGrid;
+    public List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
 
     private OrganismType typeBeingWatered;
