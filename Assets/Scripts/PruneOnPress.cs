@@ -27,17 +27,17 @@ public class PruneOnPress : MonoBehaviour
         {
             pruneOrganismType = OrganismType.Blue;
             isPruneTypeSelected = true;
-            Debug.Log("Prune Blue Trees");
+            //Debug.Log("Prune Blue Trees");
         } else if (Input.GetKey(keyPruneGreen))
         {
             pruneOrganismType = OrganismType.Green;
             isPruneTypeSelected = true;
-            Debug.Log("Prune Green Vines");
+            //Debug.Log("Prune Green Vines");
         } else if (Input.GetKey(keyPruneRed))
         {
             pruneOrganismType = OrganismType.Red;
             isPruneTypeSelected = true;
-            Debug.Log("Prune Red Weeds");
+            //Debug.Log("Prune Red Weeds");
         }
         float currentTimeSec = Time.time;
         bool isTimeToPrune = currentTimeSec - lastPruneSec > pruneCooldownPeriodSec;
@@ -62,7 +62,7 @@ public class PruneOnPress : MonoBehaviour
                         {
                             Destroy(organism);
                             gameManager.organismGrid[rowIndex][colIndex] = null;
-                            Debug.Log("Plant pruned successfully!");
+                            //Debug.Log("Plant pruned successfully!");
                         }
                     }
                 }
