@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
       if (result > 90 && result <= 100) {
         currentWeatherCondition = "frost";
       }
+
+      print("===========[ currentWeatherCondition ]=============");
+      print(currentWeatherCondition);
     }
 
     float WeatherModifier(object type)
