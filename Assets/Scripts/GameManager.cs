@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     public float positionJitterAmount;
     public AudioSource waterAudio;
 
+    public AudioSource rainWeatherAudio;
+    public AudioSource frostWeatherAudio;
+    public AudioSource cloudyWeatherAudio;
+
     private List<List<GameObject>> generatedTiles;
     public List<List<GameObject>> organismGrid;
     private float lastSimulationUpdateSec;
@@ -160,6 +164,7 @@ public class GameManager : MonoBehaviour
       // cloudy 30%
       // rainy 20%
       // frost 10%
+      stopWeatherAudio();
 
       int result = Random.Range(0, 101);
 
@@ -179,8 +184,33 @@ public class GameManager : MonoBehaviour
         currentWeatherCondition = "frost";
       }
 
+      startWeatherAudio();
+
       print("===========[ currentWeatherCondition ]=============");
       print(currentWeatherCondition);
+    }
+
+    void stopWeatherAudio()
+    {
+        rainWeatherAudio.Stop();
+        cloudyWeatherAudio.Stop();
+        frostWeatherAudio.Stop();
+    }
+
+    void startWeatherAudio()
+    {
+        if (currentWeatherCondition == "cloudy")
+        {
+            cloudyWeatherAudio.Play();
+        }
+        else if (currentWeatherCondition == "frost")
+        {
+            frostWeatherAudio.Play();
+        }
+        else if (currentWeatherCondition == "rainy")
+        {
+            rainWeatherAudio.Play();
+        }
     }
 
     float WeatherModifier(object type)
