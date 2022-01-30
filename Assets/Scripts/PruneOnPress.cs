@@ -12,6 +12,8 @@ public class PruneOnPress : MonoBehaviour
     [SerializeField] public float pruneCooldownPeriodSec = 1.0f;
     private float lastPruneSec;
     private bool isPruneTypeSelected = false;
+
+    public AudioSource pruneAudio;
     
     /// FOr UI interaction
     public GameObject prune_button;
@@ -75,6 +77,7 @@ public class PruneOnPress : MonoBehaviour
 
         if (isTimeToPrune && isPruneTypeSelected)
         {
+            pruneAudio.Play();
             isPruneTypeSelected = false;
             lastPruneSec = currentTimeSec;     
             //crawl through grid looking for organisms, check the type for pruning

@@ -7,6 +7,7 @@ public class clicked_on : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool apply_butterfly;
     public GameObject shears;
+    public AudioSource onClick;
     
     public void OnPointerDown(PointerEventData eventData)
     {
