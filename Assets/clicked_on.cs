@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class clicked_on : MonoBehaviour, IPointerDownHandler, IPointerUpHandler  
 {
     public bool apply_butterfly;
+    public GameObject shears;
     
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -15,6 +16,7 @@ public class clicked_on : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         apply_butterfly = false;
+        shears.SetActive(false);
     }
 }
 

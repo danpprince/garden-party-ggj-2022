@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class apply_pine : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public bool apply2pine;
+    public GameObject shears;
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -15,5 +16,9 @@ public class apply_pine : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         apply2pine = false;
+        shears.SetActive(false);
     }
 }
+
+
+
