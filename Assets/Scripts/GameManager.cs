@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject prune;
     public GameObject pest;
     private bool apply_water = false;
+    public GameObject water_text;
 
 
 
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
         InitializeOrganisms();
 
         lastSimulationUpdateSec = 0;
+
+   
     }
 
     void InitializeTiles()
@@ -110,6 +114,11 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(WateringCoroutine(OrganismType.Blue));
             }
         }
+
+        if (isWatering)
+        {
+            water.SetActive(false);
+        }
     }
 
     IEnumerator WateringCoroutine(OrganismType type)
@@ -121,6 +130,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         isWatering = false;
+        water.SetActive(true);
         water.GetComponent<water_click>().apply_water = false;
         Debug.Log("Stopping watering");
     }

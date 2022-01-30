@@ -18,5 +18,8 @@ public class water_click : MonoBehaviour, IPointerClickHandler
         {
             apply_water = false;
         }
+        
+        
+
     }
 }
