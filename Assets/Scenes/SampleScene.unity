@@ -520,19 +520,11 @@ MonoBehaviour:
   numInitialOrganismsPerPrefab: 2
   tilePrefab: {fileID: 8049611334167588326, guid: 37ae4b89cd24b6b42919a00fece45919, type: 3}
   organismPrefabs:
-<<<<<<< HEAD
-  - {fileID: 1339464496621412420, guid: 8244351398a688747ae73bd1b162e6c9, type: 3}
-  - {fileID: 1339464496621412420, guid: 6e69a225f9153b24484d0338447a8d35, type: 3}
-  - {fileID: 1339464496621412420, guid: 94ad8904aae0b1a4c8bbb115878f27ae, type: 3}
-  simulationUpdatePeriodSec: 0.05
-  reproductionProbability: 0.1
-=======
   - {fileID: 2737965251715330118, guid: 4f9801d165110c24ea71b0558c4f041d, type: 3}
   - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
   - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
   simulationUpdatePeriodSec: 0.05
   isWatering: 0
->>>>>>> cf.level-reset-button
 --- !u!114 &759024411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,8 +538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyRestart: 114
-<<<<<<< HEAD
-=======
 --- !u!114 &759024412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,7 +556,6 @@ MonoBehaviour:
   gameManager: {fileID: 759024410}
   popPercentToPrune: 0.5
   pruneCooldownPeriodSec: 1
->>>>>>> cf.level-reset-button
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
