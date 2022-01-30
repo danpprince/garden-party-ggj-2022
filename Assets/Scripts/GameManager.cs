@@ -85,14 +85,19 @@ public class GameManager : MonoBehaviour
 
         if (!isWatering)
         {
+            // butterfly weed
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Red));
             }
+
+            // virginia creeper
             else if (Input.GetKeyDown(KeyCode.W))
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Green));
             }
+
+            // pine
             else if (Input.GetKeyDown(KeyCode.E))
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Blue));
