@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         InitializeTiles();
         InitializeOrganisms();
-        InvokeRepeating("SetWeatherCondition", 3.0f, 3.0f);
+        InvokeRepeating("SetWeatherCondition", 5.0f, 5.0f);
 
         lastSimulationUpdateSec = 0;
     }
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
 
         waterAudio.Play();
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
 
         waterAudio.Stop();
 
