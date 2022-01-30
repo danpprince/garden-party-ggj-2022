@@ -17,56 +17,6 @@ public class OrganismModel : MonoBehaviour
 {
     public OrganismType type;
 
-    public float weatherModifier(OrganismType weather)
-    {
-      if (weather == 'sunny')
-      {
-        if (type == OrganismType.Red)
-        {
-          return 0.03f;
-        }
-        else if (type == OrganismType.Blue)
-        {
-          return 0.02f;
-        }
-        else if (type == OrganismType.Green)
-        {
-          return 0.01f;
-        }
-      }
-
-      if (weather == 'cloudy')
-      {
-        return -0.02f;
-      }
-
-      if (weather == 'rainy')
-      {
-        if (type == OrganismType.Blue)
-        {
-          return 0.03f;
-        }
-        else if (type == OrganismType.Green)
-        {
-          return 0.02f;
-        }
-        else if (type == OrganismType.Red)
-        {
-          return 0.01f;
-        }
-      }
-
-      if (weather == 'frost')
-      {
-        if (type == OrganismType.Blue)
-        {
-          return 0.0;
-        }
-
-        return -0.05f;
-      }
-    }
-
     public bool CanEatType(OrganismType otherType)
     {
         return (type == OrganismType.Green && otherType == OrganismType.Blue)
@@ -74,7 +24,7 @@ public class OrganismModel : MonoBehaviour
              || (type == OrganismType.Blue && otherType == OrganismType.Red);
     }
 
-    public float reproductionProbability(bool isWatering)
+    public float reproductionProbability(bool isWatering, float weatherModifier)
     {
       if (isWatering == true)
       {
