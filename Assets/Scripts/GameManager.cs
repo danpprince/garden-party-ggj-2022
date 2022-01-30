@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     // for weather
     public GameObject rain;
+    
+
    
 
 
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
 
         lastSimulationUpdateSec = 0;
         rain.SetActive(false);
+         
         
         
 
