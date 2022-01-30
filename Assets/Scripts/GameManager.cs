@@ -21,13 +21,24 @@ public class GameManager : MonoBehaviour
 
     /// For Handling Effect Application\\\
     public GameObject butterfly_weed_ui;
+    public GameObject pine_ui;
+    public GameObject creeper_ui;
+    ///
     private bool apply_butterfly = false;
+    private bool apply_creeper = false;
+    private bool apply_pine = false;
+    ///
     public GameObject water;
     public GameObject prune;
     public GameObject pest;
+    ///
     private bool apply_water = false;
+    private bool apply_prune = false;
+    private bool apply_fire = false;
+    ///
     public GameObject water_text;
-
+    public GameObject prune_text;
+    public GameObject fire_text;
 
 
 
@@ -97,6 +108,9 @@ public class GameManager : MonoBehaviour
     {
         UpdateSimulation();
         apply_butterfly = butterfly_weed_ui.GetComponent<clicked_on>().apply_butterfly;
+        apply_creeper = creeper_ui.GetComponent<apply_creeper>().apply2creeper;
+        apply_pine = pine_ui.GetComponent<apply_pine>().apply2pine;
+        ///
         apply_water = water.GetComponent<water_click>().apply_water;
 
         if (!isWatering)
@@ -105,11 +119,11 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Red));
             }
-            else if (Input.GetKeyDown(KeyCode.W))
+            else if (apply_creeper && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Green));
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (apply_pine && apply_water)
             {
                 StartCoroutine(WateringCoroutine(OrganismType.Blue));
             }
