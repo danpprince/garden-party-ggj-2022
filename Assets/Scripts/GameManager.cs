@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     void SetWeatherCondition()
     {
+      // ugly code
       // sunny 40%
       // cloudy 30%
       // rainy 20%
@@ -147,6 +148,7 @@ public class GameManager : MonoBehaviour
 
     float WeatherModifier(object type)
     {
+      // ugly code
       // green - virginia creeper
       // red - butterfly weed
       // blue - long leaf pine
