@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,7 +40,9 @@ public class GameManager : MonoBehaviour
     public GameObject water_text;
     public GameObject prune_text;
     public GameObject fire_text;
-
+    /// 
+    public  GameObject watering_can;
+   
 
 
 
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
         InitializeOrganisms();
 
         lastSimulationUpdateSec = 0;
+        
 
    
     }
@@ -132,6 +136,7 @@ public class GameManager : MonoBehaviour
         if (isWatering)
         {
             water.SetActive(false);
+            watering_can.SetActive(false);
         }
     }
 
