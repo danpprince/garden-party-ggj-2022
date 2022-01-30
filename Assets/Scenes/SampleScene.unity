@@ -1030,11 +1030,11 @@ MonoBehaviour:
   organismPrefabs:
   - {fileID: 3276279448317078006, guid: 0180a33f2729b0548accd272bbee410d, type: 3}
   - {fileID: 7478397693017940850, guid: 7525758f5fb86eb459718e2a9f2429ca, type: 3}
-  - {fileID: 6856086452555096265, guid: 893099cd47b41c54d9d65564aa16808c, type: 3}
+  - {fileID: 108262880038030478, guid: 0c5f30173cbd0494097e16af1a8485e8, type: 3}
   simulationUpdatePeriodSec: 0.05
   isWatering: 0
   currentWeatherCondition: sunny
-  positionJitterAmount: 0
+  positionJitterAmount: 0.5
   waterAudio: {fileID: 827097122}
   rainWeatherAudio: {fileID: 695257787}
   frostWeatherAudio: {fileID: 373541540}
